@@ -8,15 +8,16 @@ export const ProfileProvider = ({ children }) => {
   const [profiles, setProfiles] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    let user;
     const authUnsub = auth.onAuthStateChanged((authObj) => {
       // console.log(authObj);
-      let user;
+
       if (authObj) {
         user = database.ref(`/profiles/${authObj.uid}`);
         user.on("value", (snap) => {
           //database obtained from firebase database
-          const { createdAt, name } = snap.val();
-          // console.log(profileData);
+          const { name, createdAt } = snap.val();
+          console.log(profileData);
           //getting additional data from authObj
           const data = {
             name,
