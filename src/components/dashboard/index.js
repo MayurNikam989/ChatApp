@@ -1,9 +1,24 @@
-import React from "react";
-import { Button, Drawer, Icon } from "rsuite";
+import React, { useCallback } from "react";
+import { Alert, Button, Divider, Drawer, Icon } from "rsuite";
 import { useProfile } from "../../context/profile.context";
+import { database } from "../../misc/firebase";
+import EditableInput from "../EditableInput";
+import ProviderBlock from "../ProviderBlock";
 
 const Dashboard = ({ onSignOut }) => {
   const { profiles } = useProfile();
+
+  const onSave = useCallback(async (newData) => {
+    const userNicknameRef = database
+      .ref(`/profiles/${profiles.uid}`)
+      .child("name");
+    try {
+      await userNicknameRef.set(newData);
+      Alert.success("Nickname Updated Succesfully", 4000);
+    } catch (error) {
+      Alert.error(error.message, 4000);
+    }
+  }, []);
   return (
     <>
       <Drawer.Header>
@@ -12,6 +27,13 @@ const Dashboard = ({ onSignOut }) => {
 
       <Drawer.Body>
         <h3>hey,{profiles.name}</h3>
+        <ProviderBlock />
+        <Divider />
+        <EditableInput
+          placeHolder="Write your Nickname"
+          onSave={onSave}
+          initialValue={profiles.name}
+        />
       </Drawer.Body>
 
       <Drawer.Footer>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Alert, Button, Drawer, Icon } from "rsuite";
 import Dashboard from ".";
 import { useMediaQuery, useModalState } from "../../misc/custom-hooks";
@@ -8,11 +8,11 @@ const DashboardToggle = () => {
   const { isOpen, onClose, onOpen } = useModalState();
   const isMobile = useMediaQuery("(max-width:872px)");
 
-  const onSignOut = () => {
+  const onSignOut = useCallback(() => {
     auth.signOut();
     onClose();
     Alert.info("Signed Out");
-  };
+  }, [onClose]);
   return (
     <>
       <Button block appearance="primary" color="orange" onClick={onOpen}>
