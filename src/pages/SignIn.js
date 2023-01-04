@@ -19,7 +19,7 @@ const SignIn = () => {
         });
       }
 
-      Alert.success("Signed In SuccesFully", 4000);
+      Alert.success("Signed In Succesfully", 4000);
     } catch (error) {
       Alert.error(error.message, 4000);
     }
