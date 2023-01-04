@@ -17,7 +17,7 @@ export const ProfileProvider = ({ children }) => {
         user.on("value", (snap) => {
           //database obtained from firebase database
           const { name, createdAt } = snap.val();
-          console.log(profileData);
+          // console.log(profileData);
           //getting additional data from authObj
           const data = {
             name,
