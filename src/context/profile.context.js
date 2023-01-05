@@ -16,12 +16,13 @@ export const ProfileProvider = ({ children }) => {
         user = database.ref(`/profiles/${authObj.uid}`);
         user.on("value", (snap) => {
           //database obtained from firebase database
-          const { name, createdAt } = snap.val();
+          const { name, createdAt, avatar } = snap.val();
           // console.log(profileData);
           //getting additional data from authObj
           const data = {
             name,
             createdAt,
+            avatar,
             uid: authObj.uid,
             Email: authObj.email,
           };
