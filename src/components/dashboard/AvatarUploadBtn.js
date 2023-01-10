@@ -5,6 +5,8 @@ import AvatarEditor from "react-avatar-editor";
 import { database, storage } from "../../misc/firebase";
 import { useProfile } from "../../context/profile.context";
 import ProfileAvatar from "../ProfileAvatar";
+import { getUserUpdate } from "../../misc/helpers";
+
 const inputType = ".png,.jpg,.jpeg";
 const acceptedFileTypes = ["image/png", "image/jpeg", "image/jpg"];
 const isValidFile = (file) => acceptedFileTypes.includes(file.type);
@@ -44,16 +46,24 @@ const AvatarUploadBtn = () => {
 
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
 
-      const userAvatarRef = database
-        .ref(`/profiles/${profiles.uid}`)
-        .child("avatar");
+      // const userAvatarRef = database
+      //   .ref(`/profiles/${profiles.uid}`)
+      //   .child("avatar");
 
-      userAvatarRef.set(downloadUrl);
+      // userAvatarRef.set(downloadUrl);
+
+      const updates = await getUserUpdate(
+        profiles.uid,
+        "avatar",
+        downloadUrl,
+        database
+      );
+      database.ref().update(updates);
 
       Alert.info("Avatar has been uploaded", 4000);
       setIsLoading(false);
     } catch (error) {
-      Alert.info(error.message, 4000);
+      Alert.error(error.message, 4000);
       setIsLoading(false);
     }
   };
@@ -72,7 +82,11 @@ const AvatarUploadBtn = () => {
   };
   return (
     <div className="mt-3 text-center">
-      <ProfileAvatar src={profiles.avatar} name={profiles.name} />
+      <ProfileAvatar
+        src={profiles.avatar}
+        className="width-200 height-200 img-fullsize font-huge"
+        name={profiles.name}
+      />
 
       <div>
         <label

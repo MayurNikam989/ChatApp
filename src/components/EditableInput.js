@@ -1,7 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { Icon, InputGroup, Input, Alert } from "rsuite";
 
-const EditableInput = ({ placeHolder, onSave, initialValue }) => {
+const EditableInput = ({
+  onSave,
+  initialValue,
+
+  label,
+  wrapperClass = "",
+  ...InputProps
+}) => {
   const [input, setInput] = useState(initialValue);
   const [isEditable, setIsEditable] = useState(false);
 
@@ -26,13 +33,12 @@ const EditableInput = ({ placeHolder, onSave, initialValue }) => {
   };
 
   return (
-    <div>
-      <h6 className="mb-3">Nickname</h6>
+    <div className={wrapperClass}>
+      {label}
       <InputGroup>
         <Input
           disabled={!isEditable}
-          name="nickname"
-          placeholder={placeHolder}
+          {...InputProps}
           value={input}
           onChange={onInputChange}
         ></Input>

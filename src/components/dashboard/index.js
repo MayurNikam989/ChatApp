@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { Alert, Button, Divider, Drawer, Icon } from "rsuite";
 import { useProfile } from "../../context/profile.context";
 import { database } from "../../misc/firebase";
+import { getUserUpdate } from "../../misc/helpers";
 import EditableInput from "../EditableInput";
 import ProviderBlock from "../ProviderBlock";
 import AvatarUploadBtn from "./AvatarUploadBtn";
@@ -9,17 +10,24 @@ import AvatarUploadBtn from "./AvatarUploadBtn";
 const Dashboard = ({ onSignOut }) => {
   const { profiles } = useProfile();
 
-  const onSave = useCallback(async (newData) => {
-    const userNicknameRef = database
-      .ref(`/profiles/${profiles.uid}`)
-      .child("name");
+  const onSave = async (newData) => {
+    // const userNicknameRef = database
+    //   .ref(`/profiles/${profiles.uid}`)
+    //   .child("name");
     try {
-      await userNicknameRef.set(newData);
+      // await userNicknameRef.set(newData);
+      const updates = await getUserUpdate(
+        profiles.uid,
+        "name",
+        newData,
+        database
+      );
+      database.ref().update(updates);
       Alert.success("Nickname Updated Succesfully", 4000);
     } catch (error) {
       Alert.error(error.message, 4000);
     }
-  }, []);
+  };
   return (
     <>
       <Drawer.Header>
@@ -31,9 +39,11 @@ const Dashboard = ({ onSignOut }) => {
         <ProviderBlock />
         <Divider />
         <EditableInput
-          placeHolder="Write your Nickname"
+          placeholder="Write your Nickname"
           onSave={onSave}
+          label={<h6 className="mb-3">Nickname</h6>}
           initialValue={profiles.name}
+          name="Nickname"
         />
         <AvatarUploadBtn />
       </Drawer.Body>

@@ -5,10 +5,10 @@ import firebase from "firebase";
 
 const ProviderBlock = () => {
   const [isConnected, setIsConnected] = useState({
-    "google.com": auth.currentUser.providerData.some((data) => {
+    "google.com": auth.currentUser?.providerData?.some((data) => {
       return data.providerId === "google.com";
     }),
-    "facebook.com": auth.currentUser.providerData.some((data) => {
+    "facebook.com": auth.currentUser?.providerData?.some((data) => {
       return data.providerId === "facebook.com";
     }),
   });

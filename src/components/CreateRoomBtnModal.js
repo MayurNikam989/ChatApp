@@ -91,7 +91,7 @@ const CreateRoomBtnModal = () => {
           <Button
             block
             appearance="primary"
-            color="blue"
+            color="cyan"
             onClick={onSubmit}
             disabled={isLoading}
           >
