@@ -8,7 +8,7 @@ import EditRoomBtnDrawer from "../messages/EditRoomBtnDrawer";
 
 const ChatTop = () => {
   const name = useCurrentRooms((v) => v.name);
-
+  const isAdmin = useCurrentRooms((v) => v.isAdmin);
   const isMobile = useMediaQuery("(max-width:992px");
 
   return (
@@ -27,7 +27,7 @@ const ChatTop = () => {
         </h4>
 
         <ButtonToolbar className="ws-nowrap">
-          <EditRoomBtnDrawer />
+          {isAdmin && <EditRoomBtnDrawer />}
         </ButtonToolbar>
       </div>
 

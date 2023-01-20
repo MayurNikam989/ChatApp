@@ -39,7 +39,7 @@ const EditRoomBtnDrawer = () => {
       <Button className=".br-circle" size="sm" color="red" onClick={onOpen}>
         A
       </Button>
-      <Drawer full={isMobile} show={isOpen} onClose={onClose} placement="right">
+      <Drawer full={isMobile} show={isOpen} onHide={onClose} placement="right">
         <Drawer.Header>
           <Drawer.Title>Edit Room</Drawer.Title>
         </Drawer.Header>
@@ -65,7 +65,7 @@ const EditRoomBtnDrawer = () => {
         </Drawer.Body>
 
         <Drawer.Footer>
-          <Button block appearance="primary" onClick={onClose}>
+          <Button block onClick={onClose}>
             Close
           </Button>
         </Drawer.Footer>

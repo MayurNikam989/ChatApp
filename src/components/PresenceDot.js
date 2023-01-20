@@ -1,6 +1,7 @@
 import React from "react";
 import { usePresence } from "../misc/custom-hooks";
 import { Whisper, Button, Badge, Tooltip } from "rsuite";
+import TimeAgo from "timeago-react";
 
 const getColor = (presence) => {
   if (!presence) {
@@ -21,11 +22,15 @@ const getText = (presence) => {
   if (!presence) {
     return "status unknown";
   }
+  // <TimeAgo
+  //       datetime={new Date(createdAt)}
+  //       className="font-size-xs  text-black-45"
+  //     ></TimeAgo>
 
   if (presence.state === "online") {
     return "online";
   } else {
-    return `Last seen ${new Date(presence.last_changed).toLocaleTimeString}`;
+    return `Last seen ${new Date(presence.last_changed).toLocaleDateString()}`;
   }
 };
 
